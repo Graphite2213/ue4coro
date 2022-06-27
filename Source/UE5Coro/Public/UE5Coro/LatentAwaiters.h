@@ -35,7 +35,7 @@
 #include <coroutine>
 #include <functional>
 
-namespace UE5Coro::Private
+namespace UE4Coro::Private
 {
 class FAsyncPromise;
 class FLatentAwaiter;
@@ -43,7 +43,7 @@ class FLatentCancellation;
 class FLatentPromise;
 }
 
-namespace UE5Coro::Latent
+namespace UE4Coro::Latent
 {
 /** Stops the latent coroutine immediately WITHOUT firing the latent exec pin.<br>
  *  The coroutine WILL NOT be resumed. This does not count as the coroutine being
@@ -52,32 +52,32 @@ Private::FLatentCancellation Cancel();
 
 /** Resumes the coroutine in the next tick.<br>
  *  @see Latent::Until for an alternative to while-NextTick loops. */
-UE5CORO_API Private::FLatentAwaiter NextTick();
+UE4Coro_API Private::FLatentAwaiter NextTick();
 
 /** Resumes the coroutine on the first tick after the given number of frames. */
-UE5CORO_API Private::FLatentAwaiter Frames(int32);
+UE4Coro_API Private::FLatentAwaiter Frames(int32);
 
 /** Resumes the coroutine the specified amount of seconds later.<br>
  *  This is affected by both pause and time dilation. */
-UE5CORO_API Private::FLatentAwaiter Seconds(float);
+UE4Coro_API Private::FLatentAwaiter Seconds(double);
 
 /** Resumes the coroutine the specified amount of seconds later.<br>
  *  This is affected by time dilation only, NOT pause. */
-UE5CORO_API Private::FLatentAwaiter UnpausedSeconds(float);
+UE4Coro_API Private::FLatentAwaiter UnpausedSeconds(double);
 
 /** Resumes the coroutine the specified amount of seconds later.<br>
  *  This is not affected by pause or time dilation. */
-UE5CORO_API Private::FLatentAwaiter RealSeconds(float);
+UE4Coro_API Private::FLatentAwaiter RealSeconds(double);
 
 /** Resumes the coroutine the specified amount of seconds later.<br>
  *  This is affected by pause only, NOT time dilation. */
-UE5CORO_API Private::FLatentAwaiter AudioSeconds(float);
+UE4Coro_API Private::FLatentAwaiter AudioSeconds(double);
 
 /** Asynchronously starts loading the object, resumes once it's loaded. */
-UE5CORO_API Private::FLatentAwaiter AsyncLoadObject(TSoftObjectPtr<UObject>);
+UE4Coro_API Private::FLatentAwaiter AsyncLoadObject(TSoftObjectPtr<UObject>);
 
 /** Asynchronously starts loading the class, resumes once it's loaded. */
-UE5CORO_API Private::FLatentAwaiter AsyncLoadClass(TSoftClassPtr<UObject>);
+UE4Coro_API Private::FLatentAwaiter AsyncLoadClass(TSoftClassPtr<UObject>);
 
 /** Resumes the coroutine once the chained static latent action has finished,
  *  with automatic parameter matching.<br>Example usage:<br>
@@ -101,12 +101,12 @@ Private::FLatentAwaiter Chain(auto (Class::*Function)(FnParams...),
 Private::FLatentAwaiter ChainEx(auto&& Function, auto&&... Args);
 
 /** Polls the provided function, resumes the coroutine when it returns true. */
-UE5CORO_API Private::FLatentAwaiter Until(std::function<bool()> Function);
+UE4Coro_API Private::FLatentAwaiter Until(std::function<bool()> Function);
 }
 
-namespace UE5Coro::Private
+namespace UE4Coro::Private
 {
-class [[nodiscard]] UE5CORO_API FLatentCancellation final
+class [[nodiscard]] UE4Coro_API FLatentCancellation final
 {
 public:
 	bool await_ready() { return false; }
@@ -114,7 +114,7 @@ public:
 	void await_suspend(std::coroutine_handle<FLatentPromise>);
 };
 
-class [[nodiscard]] UE5CORO_API FLatentAwaiter final
+class [[nodiscard]] UE4Coro_API FLatentAwaiter final
 {
 	void* State;
 	bool (*Resume)(void*& State, bool bCleanup);
@@ -134,7 +134,7 @@ public:
 };
 }
 
-inline UE5Coro::Private::FLatentCancellation UE5Coro::Latent::Cancel()
+inline UE4Coro::Private::FLatentCancellation UE4Coro::Latent::Cancel()
 {
 	return {};
 }

@@ -1,12 +1,12 @@
 {
 	"FileVersion": 3,
 	"Version": 1,
-	"VersionName": "1.1.1",
-	"FriendlyName": "UE5Coro",
+	"VersionName": "1.2",
+	"FriendlyName": "UE4Coro",
 	"Description": "C++20 coroutine implementation for Unreal Engine",
 	"Category": "Programming",
 	"CreatedBy": "Laura Andelare",
-	"CreatedByURL": "https://github.com/landelare/ue5coro",
+	"CreatedByURL": "https://github.com/Graphite2213/UE4Coro",
 	"DocsURL": "",
 	"MarketplaceURL": "",
 	"SupportURL": "",
@@ -18,12 +18,12 @@
 	"Installed": false,
 	"Modules": [
 		{
-			"Name": "UE5Coro",
+			"Name": "UE4Coro",
 			"Type": "Runtime",
 			"LoadingPhase": "PostConfigInit"
 		},
 		{
-			"Name": "UE5CoroK2",
+			"Name": "UE4CoroK2",
 			"Type": "UncookedOnly",
 			"LoadingPhase": "PostConfigInit"
 		}

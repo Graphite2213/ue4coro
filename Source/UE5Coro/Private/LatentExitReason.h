@@ -31,7 +31,7 @@
 
 #pragma once
 
-namespace UE5Coro::Private
+namespace UE4Coro::Private
 {
 extern enum class ELatentExitReason : uint8
 {

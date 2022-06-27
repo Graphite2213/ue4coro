@@ -34,13 +34,13 @@
 #include "CoreMinimal.h"
 #include <coroutine>
 
-namespace UE5Coro::Private
+namespace UE4Coro::Private
 {
 template<typename>
 class TGeneratorPromise;
 }
 
-namespace UE5Coro
+namespace UE4Coro
 {
 template<typename>
 class TGeneratorIterator;
@@ -152,7 +152,7 @@ public:
 };
 }
 
-namespace UE5Coro::Private
+namespace UE4Coro::Private
 {
 class [[nodiscard]] FGeneratorPromise
 {
@@ -185,7 +185,13 @@ public:
 		return TGenerator<T>(handle_type::from_promise(*this));
 	}
 
-	std::suspend_always yield_value(std::convertible_to<T> auto&& Value)
+	std::suspend_always yield_value(std::remove_reference_t<T>& Value)
+	{
+		Current = std::addressof(Value);
+		return {};
+	}
+
+	std::suspend_always yield_value(std::remove_reference_t<T>&& Value)
 	{
 		Current = std::addressof(Value);
 		return {};

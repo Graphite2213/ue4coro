@@ -31,9 +31,9 @@
 
 using UnrealBuildTool;
 
-public class UE5Coro : ModuleRules
+public class UE4CoroK2 : ModuleRules
 {
-	public UE5Coro(ReadOnlyTargetRules Target)
+	public UE4CoroK2(ReadOnlyTargetRules Target)
 		: base(Target)
 	{
 		CppStandard = CppStandardVersion.Latest;
@@ -41,9 +41,11 @@ public class UE5Coro : ModuleRules
 
 		PublicDependencyModuleNames.AddRange(new[]
 		{
+			"BlueprintGraph",
 			"Core",
 			"CoreUObject",
 			"Engine",
+			"UE4Coro",
 		});
 	}
 }

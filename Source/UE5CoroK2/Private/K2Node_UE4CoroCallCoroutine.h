@@ -33,12 +33,12 @@
 
 #include "CoreMinimal.h"
 #include "K2Node_CallFunction.h"
-#include "K2Node_UE5CoroCallCoroutine.generated.h"
+#include "K2Node_UE4CoroCallCoroutine.generated.h"
 
 /** A minor cosmetic alteration of the regular "Call Function" node, hiding the
  *  useless return value of coroutines. */
 UCLASS()
-class UE5COROK2_API UK2Node_UE5CoroCallCoroutine : public UK2Node_CallFunction
+class UE4CoroK2_API UK2Node_UE4CoroCallCoroutine : public UK2Node_CallFunction
 {
 	GENERATED_BODY()
 

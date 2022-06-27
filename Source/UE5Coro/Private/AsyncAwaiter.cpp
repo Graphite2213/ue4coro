@@ -29,10 +29,10 @@
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 // ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#include "UE5Coro/AsyncAwaiters.h"
-#include "UE5Coro/LatentCallbacks.h"
+#include "UE4Coro/AsyncAwaiters.h"
+#include "UE4Coro/LatentCallbacks.h"
 
-using namespace UE5Coro::Private;
+using namespace UE4Coro::Private;
 
 namespace
 {

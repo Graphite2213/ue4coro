@@ -29,10 +29,10 @@
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 // ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#include "UE5Coro/LatentAwaiters.h"
-#include "UE5Coro/UE5CoroSubsystem.h"
+#include "UE4Coro/LatentAwaiters.h"
+#include "UE4Coro/UE4CoroSubsystem.h"
 
-using namespace UE5Coro;
+using namespace UE4Coro;
 
 bool Private::ShouldResumeChain(void*& State, bool bCleanup)
 {
@@ -49,7 +49,7 @@ bool Private::ShouldResumeChain(void*& State, bool bCleanup)
 
 std::tuple<FLatentActionInfo, bool*> Private::MakeLatentInfo()
 {
-	auto* Sys = GWorld->GetSubsystem<UUE5CoroSubsystem>();
+	auto* Sys = GWorld->GetSubsystem<UUE4CoroSubsystem>();
 	auto* Done = new bool(false); // ShouldResumeChain will delete
 	return {Sys->MakeLatentInfo(Done), Done};
 }

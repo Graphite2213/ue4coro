@@ -29,7 +29,7 @@
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 // ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#include "UE5Coro/AsyncCoroutine.h"
+#include "UE4Coro/AsyncCoroutine.h"
 
 TMulticastDelegate<void()>& FAsyncCoroutine::OnCompletion()
 {

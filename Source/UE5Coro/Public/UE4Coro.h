@@ -29,23 +29,12 @@
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 // ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-using UnrealBuildTool;
+#pragma once
 
-public class UE5CoroK2 : ModuleRules
-{
-	public UE5CoroK2(ReadOnlyTargetRules Target)
-		: base(Target)
-	{
-		CppStandard = CppStandardVersion.Latest;
-		bUseUnity = false;
-
-		PublicDependencyModuleNames.AddRange(new[]
-		{
-			"BlueprintGraph",
-			"Core",
-			"CoreUObject",
-			"Engine",
-			"UE5Coro",
-		});
-	}
-}
+#include "CoreMinimal.h"
+#include "UE4Coro/AsyncAwaiters.h"
+#include "UE4Coro/AsyncCoroutine.h"
+#include "UE4Coro/Generator.h"
+#include "UE4Coro/LatentAwaiters.h"
+#include "UE4Coro/LatentCallbacks.h"
+#include "UE4Coro/LatentTimeline.h"

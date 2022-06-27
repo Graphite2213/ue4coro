@@ -30,10 +30,10 @@
 // ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "Engine/StreamableManager.h"
-#include "UE5Coro/LatentAwaiters.h"
+#include "UE4Coro/LatentAwaiters.h"
 
-using namespace UE5Coro;
-using namespace UE5Coro::Private;
+using namespace UE4Coro;
+using namespace UE4Coro::Private;
 
 namespace
 {

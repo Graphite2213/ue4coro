@@ -29,33 +29,26 @@
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 // ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#pragma once
+#include "UE4Coro/UE4CoroSubsystem.h"
 
-#include "CoreMinimal.h"
-#include "Engine/LatentActionManager.h"
-#include "Subsystems/WorldSubsystem.h"
-#include "UE4CoroSubsystem.generated.h"
-
-/**
- * Subsystem supporting some async coroutine functionality.<br>
- * You never need to interact with it directly.
- */
-UCLASS()
-class UE4Coro_API UUE4CoroSubsystem : public UWorldSubsystem
+FLatentActionInfo UUE4CoroSubsystem::MakeLatentInfo()
 {
-	GENERATED_BODY()
+	checkf(IsInGameThread(), TEXT("Unexpected latent info off the game thread"));
+	// Using INDEX_NONE linkage and next as the UUID is marginally faster due
+	// to an early exit in FLatentActionManager::TickLatentActionForObject.
+	return {INDEX_NONE, NextLinkage++, TEXT("None"), GetWorld()};
+}
 
-	int32 NextLinkage = 0;
-	TMap<int32, bool*> Targets;
+FLatentActionInfo UUE4CoroSubsystem::MakeLatentInfo(bool* Done)
+{
+	checkf(IsInGameThread(), TEXT("Unexpected latent info off the game thread"));
+	int32 Linkage = NextLinkage++;
+	checkf(!Targets.Contains(Linkage), TEXT("Unexpected linkage collision"));
+	Targets.Add(Linkage, Done);
+	return {Linkage, Linkage, TEXT("ExecuteLink"), this};
+}
 
-public:
-	/** Creates a unique LatentInfo that does not lead anywhere. */
-	FLatentActionInfo MakeLatentInfo();
-
-	/** Creates a LatentInfo suitable for the Latent::Chain* functions. */
-	FLatentActionInfo MakeLatentInfo(bool* Done);
-
-	/** Signals the coroutine suspended with this linkage that it may resume. */
-	UFUNCTION()
-	void ExecuteLink(int32 Link);
-};
+void UUE4CoroSubsystem::ExecuteLink(int32 Link)
+{
+	*Targets.FindAndRemoveChecked(Link) = true;
+}

@@ -29,26 +29,42 @@
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 // ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#include "UE5Coro/UE5CoroSubsystem.h"
+#include "UE4Coro/LatentTimeline.h"
+#include "UE4Coro/LatentAwaiters.h"
+#include "UE4Coro/UE4CoroSubsystem.h"
 
-FLatentActionInfo UUE5CoroSubsystem::MakeLatentInfo()
+using namespace UE4Coro;
+using namespace UE4Coro::Latent;
+
+namespace
 {
-	checkf(IsInGameThread(), TEXT("Unexpected latent info off the game thread"));
-	// Using INDEX_NONE linkage and next as the UUID is marginally faster due
-	// to an early exit in FLatentActionManager::TickLatentActionForObject.
-	return {INDEX_NONE, NextLinkage++, TEXT("None"), GetWorld()};
+// Dummy FLatentActionInfo parameter to force a FLatentPromise and get tied to
+// a FLatentActionManager, otherwise this would keep running even after the
+// world is gone.
+template<auto GetTime>
+FAsyncCoroutine CommonTimeline(double From, double To, double Length,
+                               std::function<void(double)> Fn,
+                               FLatentActionInfo = {})
+{
+	checkf(IsInGameThread(),
+	       TEXT("Latent coroutines may only be started on the game thread"));
+	double Start = (GWorld->*GetTime)();
+	for (;;)
+	{
+		// Make sure the last call is exactly at Length
+		double Alpha = FMath::Min((GWorld->*GetTime)() - Start, Length);
+		Fn(FMath::Lerp(From, To, Alpha));
+		if (Alpha == Length)
+			co_return;
+		co_await NextTick();
+	}
+}
 }
 
-FLatentActionInfo UUE5CoroSubsystem::MakeLatentInfo(bool* Done)
+FAsyncCoroutine Latent::Timeline(double From, double To, double Length,
+                                 std::function<void(double)> Fn)
 {
-	checkf(IsInGameThread(), TEXT("Unexpected latent info off the game thread"));
-	int32 Linkage = NextLinkage++;
-	checkf(!Targets.Contains(Linkage), TEXT("Unexpected linkage collision"));
-	Targets.Add(Linkage, Done);
-	return {Linkage, Linkage, TEXT("ExecuteLink"), this};
-}
-
-void UUE5CoroSubsystem::ExecuteLink(int32 Link)
-{
-	*Targets.FindAndRemoveChecked(Link) = true;
+	auto Info = GWorld->GetSubsystem<UUE4CoroSubsystem>()->MakeLatentInfo();
+	return CommonTimeline<&UWorld::GetTimeSeconds>(From, To, Length,
+	                                               std::move(Fn), Info);
 }

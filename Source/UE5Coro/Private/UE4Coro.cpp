@@ -29,11 +29,11 @@
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 // ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#include "UE5Coro.h"
+#include "UE4Coro.h"
 #include "Modules/ModuleManager.h"
 
-class FUE5CoroModule : public IModuleInterface
+class FUE4CoroModule : public IModuleInterface
 {
 };
 
-IMPLEMENT_MODULE(FUE5CoroModule, UE5Coro);
+IMPLEMENT_MODULE(FUE4CoroModule, UE4Coro);

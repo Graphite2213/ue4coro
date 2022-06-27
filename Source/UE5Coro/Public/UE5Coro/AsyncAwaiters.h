@@ -34,28 +34,28 @@
 #include "CoreMinimal.h"
 #include <coroutine>
 #include "Async/TaskGraphInterfaces.h"
-#include "UE5Coro/AsyncCoroutine.h"
+#include "UE4Coro/AsyncCoroutine.h"
 
-namespace UE5Coro::Private
+namespace UE4Coro::Private
 {
 class FAsyncAwaiter;
 class FAsyncPromise;
 class FLatentPromise;
 }
 
-namespace UE5Coro::Async
+namespace UE4Coro::Async
 {
 /** Suspends the coroutine and resumes it on the provided named thread. */
-UE5CORO_API Private::FAsyncAwaiter MoveToThread(ENamedThreads::Type);
+UE4Coro_API Private::FAsyncAwaiter MoveToThread(ENamedThreads::Type);
 
 /** Convenience function to resume on the game thread.<br>
  *  Equivalent to calling Async::MoveToThread(ENamedThreads::GameThread). */
-UE5CORO_API Private::FAsyncAwaiter MoveToGameThread();
+UE4Coro_API Private::FAsyncAwaiter MoveToGameThread();
 }
 
-namespace UE5Coro::Private
+namespace UE4Coro::Private
 {
-class [[nodiscard]] UE5CORO_API FAsyncAwaiter final
+class [[nodiscard]] UE4Coro_API FAsyncAwaiter final
 {
 	using handle_type = std::coroutine_handle<FPromise>;
 

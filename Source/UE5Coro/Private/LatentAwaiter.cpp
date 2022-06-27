@@ -30,11 +30,11 @@
 // ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "LatentActions.h"
-#include "UE5Coro/AsyncCoroutine.h"
-#include "UE5Coro/LatentAwaiters.h"
-#include "UE5Coro/UE5CoroSubsystem.h"
+#include "UE4Coro/AsyncCoroutine.h"
+#include "UE4Coro/LatentAwaiters.h"
+#include "UE4Coro/UE4CoroSubsystem.h"
 
-using namespace UE5Coro::Private;
+using namespace UE4Coro::Private;
 
 namespace
 {
@@ -91,7 +91,7 @@ void FLatentAwaiter::await_suspend(std::coroutine_handle<FAsyncPromise> Handle)
 	       TEXT("Latent awaiters may only be used on the game thread"));
 
 	// Prepare a latent action on the subsystem and transfer ownership to that
-	auto* Sys = GWorld->GetSubsystem<UUE5CoroSubsystem>();
+	auto* Sys = GWorld->GetSubsystem<UUE4CoroSubsystem>();
 	auto* Latent = new FPendingAsyncCoroutine(Handle, this);
 	auto LatentInfo = Sys->MakeLatentInfo();
 	GWorld->GetLatentActionManager().AddNewAction(

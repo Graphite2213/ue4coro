@@ -37,7 +37,7 @@
 #include "Engine/LatentActionManager.h"
 #include "AsyncCoroutine.generated.h"
 
-namespace UE5Coro::Private
+namespace UE4Coro::Private
 {
 enum class ELatentExitReason : uint8;
 class FAsyncAwaiter;
@@ -57,11 +57,11 @@ class FPromise;
  * be stored.
  */
 USTRUCT(BlueprintInternalUseOnly, Meta=(HiddenByDefault))
-struct UE5CORO_API FAsyncCoroutine
+struct UE4Coro_API FAsyncCoroutine
 {
 	GENERATED_BODY()
-	using handle_type = std::coroutine_handle<UE5Coro::Private::FPromise>;
-	friend UE5Coro::Private::FAsyncPromise;
+	using handle_type = std::coroutine_handle<UE4Coro::Private::FPromise>;
+	friend UE4Coro::Private::FAsyncPromise;
 
 private:
 	handle_type Handle;
@@ -86,11 +86,11 @@ struct std::coroutine_traits<FAsyncCoroutine, Args...>
 	static_assert(LatentInfoCount <= 1,
 		"Multiple FLatentActionInfo parameters found in coroutine");
 	using promise_type = std::conditional_t<LatentInfoCount,
-	                                        UE5Coro::Private::FLatentPromise,
-	                                        UE5Coro::Private::FAsyncPromise>;
+	                                        UE4Coro::Private::FLatentPromise,
+	                                        UE4Coro::Private::FAsyncPromise>;
 };
 
-namespace UE5Coro::Private
+namespace UE4Coro::Private
 {
 struct FInitialSuspend
 {
@@ -110,7 +110,7 @@ struct FInitialSuspend
 	}
 };
 
-class [[nodiscard]] UE5CORO_API FPromise
+class [[nodiscard]] UE4Coro_API FPromise
 {
 #if DO_CHECK
 	static constexpr uint32 Expected = U'♪' << 16 | U'♫';
@@ -137,7 +137,7 @@ public:
 	std::suspend_never yield_value(auto&&) = delete;
 };
 
-class [[nodiscard]] UE5CORO_API FAsyncPromise : public FPromise
+class [[nodiscard]] UE4Coro_API FAsyncPromise : public FPromise
 {
 public:
 	std::suspend_never initial_suspend() { return {}; }
@@ -148,7 +148,7 @@ public:
 	FAsyncAwaiter await_transform(FAsyncCoroutine);
 };
 
-class [[nodiscard]] UE5CORO_API FLatentPromise : public FPromise
+class [[nodiscard]] UE4Coro_API FLatentPromise : public FPromise
 {
 public:
 	enum ELatentState

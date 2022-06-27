@@ -1,9 +1,10 @@
-# UE5Coro
+# UE4Coro
+
+## **IMPORTANT NOTICE(S)**
 
 This repo is a fork from [UE5Coro](https://github.com/landelare/ue5coro), changed to work with UE4 out of the box.
 I only tested this on a source build of the engine so i cannot guarantee that it will work on a launcher build.
-
-**NOTE:** This fork is quite substantially behind the UE5 release, missing some new features; As of right now im unable to add these new features as UE4 doesn't support them with minimal changes and im currently focusing on a different project (I might update it one day though).
+This fork is missing a debatably important feature of HTTP coroutines which i decided to leave out as it doesn't work with UE4 with minimal changes. If i tried hard enough i could probably make it work but it's not on my priority list right now.
 
 ## Installing
 
@@ -17,18 +18,22 @@ In your Build.cs file, add or change this line:
 ```c#
 CppStandard = CppStandardVersion.Latest;
 ```
-Add `"UE5Coro"` to your dependency module names, enable the plugin, and you're
+Add `"UE4Coro"` to your dependency module names, enable the plugin, and you're
 ready to go!
 
 ## Features
 
-Two main flavors of coroutines are currently implemented.
-Use these links to navigate to their detailed documentation pages or read this
-page for a quick overview:
+Click these links for the detailed description of the main features provided
+by this plugin, or keep reading for a quick overview.
 
-* [Generators](Docs/Generator.md) (caller-controlled, returning a sequence of
-                                   objects, a.k.a. iterators in C#)
-* [Async coroutines](Docs/Async.md) (callee-controlled pausing of execution)
+* [Generators](Docs/Generator.md) are caller-controlled and `co_yield` a
+sequence of objects, also known as iterators in C#.
+* [Async coroutines](Docs/Async.md) control their own resumption by
+`co_await`ing various awaiter objects. They can be used to implement BP latent
+actions or as a generic fork in code execution like AsyncTask, but not
+necessarily involving multithreading.
+* [Overview of built-in awaiters](Docs/Awaiters.md) that you can use with async
+coroutines.
 
 ### Generators
 
@@ -36,11 +41,11 @@ Generators can be used to return an arbitrary number of items from a function
 without having to pass them through temp arrays, etc.
 In C# they're known as iterators.
 
-Returning `UE5Coro::TGenerator<T>` makes a function coroutine enabled, supporting
+Returning `UE4Coro::TGenerator<T>` makes a function coroutine enabled, supporting
 `co_yield`:
 
 ```cpp
-using namespace UE5Coro;
+using namespace UE4Coro;
 
 TGenerator<FString> MakeParkingSpaces(int Num)
 {
@@ -60,7 +65,7 @@ coroutine enabled and support `co_await`. There's special handling in place that
 automatically implements BP latent actions for you but it works for everything:
 
 ```cpp
-using namespace UE5Coro;
+using namespace UE4Coro;
 
 UFUNCTION(BlueprintCallable, Meta = (Latent, LatentInfo = "LatentInfo"))
 FAsyncCoroutine UExampleFunctionLibrary::K2_Foo(int EpicPleaseFixUE22342,

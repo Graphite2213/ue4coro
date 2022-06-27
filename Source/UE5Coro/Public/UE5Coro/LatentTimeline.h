@@ -31,31 +31,12 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
-#include "Engine/LatentActionManager.h"
-#include "Subsystems/WorldSubsystem.h"
-#include "UE4CoroSubsystem.generated.h"
+#include "UE4Coro/AsyncCoroutine.h"
+#include <functional>
 
-/**
- * Subsystem supporting some async coroutine functionality.<br>
- * You never need to interact with it directly.
- */
-UCLASS()
-class UE4Coro_API UUE4CoroSubsystem : public UWorldSubsystem
+namespace UE4Coro::Latent
 {
-	GENERATED_BODY()
-
-	int32 NextLinkage = 0;
-	TMap<int32, bool*> Targets;
-
-public:
-	/** Creates a unique LatentInfo that does not lead anywhere. */
-	FLatentActionInfo MakeLatentInfo();
-
-	/** Creates a LatentInfo suitable for the Latent::Chain* functions. */
-	FLatentActionInfo MakeLatentInfo(bool* Done);
-
-	/** Signals the coroutine suspended with this linkage that it may resume. */
-	UFUNCTION()
-	void ExecuteLink(int32 Link);
-};
+/** Repeatedly calls the provided function with linearly-interpolated values. */
+FAsyncCoroutine UE4Coro_API Timeline(double From, double To, double Length,
+                                     std::function<void(double)> Fn);
+}

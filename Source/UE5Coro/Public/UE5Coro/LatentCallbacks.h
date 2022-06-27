@@ -34,7 +34,7 @@
 #include <functional>
 #include "Misc/ScopeExit.h"
 
-namespace UE5Coro::Latent
+namespace UE4Coro::Latent
 {
 /**
  * Provided for advanced scenarios, prefer ON_SCOPE_EXIT or RAII for unconditional
@@ -46,7 +46,7 @@ namespace UE5Coro::Latent
  * <br>Example usage:<br>
  * Latent::FOnAbnormalExit Guard([]{cleanup code});
  */
-struct [[nodiscard]] UE5CORO_API FOnAbnormalExit
+struct [[nodiscard]] UE4Coro_API FOnAbnormalExit
 	: ScopeExitSupport::TScopeGuard<std::function<void()>>
 {
 	explicit FOnAbnormalExit(std::function<void()> Fn);
@@ -62,7 +62,7 @@ struct [[nodiscard]] UE5CORO_API FOnAbnormalExit
  * Latent::FOnActionAborted Guard([this]{cleanup code});
  * @see FPendingLatentAction::NotifyActionAborted()
  */
-struct [[nodiscard]] UE5CORO_API FOnActionAborted
+struct [[nodiscard]] UE4Coro_API FOnActionAborted
 	: ScopeExitSupport::TScopeGuard<std::function<void()>>
 {
 	explicit FOnActionAborted(std::function<void()> Fn);
@@ -78,7 +78,7 @@ struct [[nodiscard]] UE5CORO_API FOnActionAborted
  * Latent::FOnObjectDestroyed Guard([]{cleanup code});
  * @see FPendingLatentAction::NotifyObjectDestroyed()
  */
-struct [[nodiscard]] UE5CORO_API FOnObjectDestroyed
+struct [[nodiscard]] UE4Coro_API FOnObjectDestroyed
 	: ScopeExitSupport::TScopeGuard<std::function<void()>>
 {
 	explicit FOnObjectDestroyed(std::function<void()> Fn);

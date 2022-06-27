@@ -35,10 +35,10 @@
 #include "Engine/LatentActionManager.h"
 #include "Engine/World.h"
 
-namespace UE5Coro::Private
+namespace UE4Coro::Private
 {
-UE5CORO_API bool ShouldResumeChain(void*&, bool);
-UE5CORO_API std::tuple<FLatentActionInfo, bool*> MakeLatentInfo();
+UE4Coro_API bool ShouldResumeChain(void*&, bool);
+UE4Coro_API std::tuple<FLatentActionInfo, bool*> MakeLatentInfo();
 
 template<typename T>
 concept TWorldContext = std::same_as<std::decay_t<T>, UObject*> ||
@@ -115,7 +115,7 @@ struct FLatentChain<bWorld, bInfo, Type, Types...>
 };
 }
 
-namespace UE5Coro::Latent
+namespace UE4Coro::Latent
 {
 template<typename... FnParams>
 Private::FLatentAwaiter Chain(auto (*Function)(FnParams...), auto&&... Args)

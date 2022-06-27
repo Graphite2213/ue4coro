@@ -29,10 +29,22 @@
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 // ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#include "Modules/ModuleManager.h"
+using UnrealBuildTool;
 
-class FUE5CoroK2Module : public IModuleInterface
+public class UE4Coro : ModuleRules
 {
-};
+	public UE4Coro(ReadOnlyTargetRules Target)
+		: base(Target)
+	{
+		CppStandard = CppStandardVersion.Latest;
+		bUseUnity = false;
 
-IMPLEMENT_MODULE(FUE5CoroK2Module, UE5CoroK2);
+		PublicDependencyModuleNames.AddRange(new[]
+		{
+			"Core",
+			"CoreUObject",
+			"Engine",
+			"HTTP",
+		});
+	}
+}

@@ -29,13 +29,13 @@
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 // ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#include "UE5Coro/LatentCallbacks.h"
+#include "UE4Coro/LatentCallbacks.h"
 #include "LatentExitReason.h"
 
-using namespace UE5Coro::Latent;
-using namespace UE5Coro::Private;
+using namespace UE4Coro::Latent;
+using namespace UE4Coro::Private;
 
-ELatentExitReason UE5Coro::Private::GLatentExitReason = ELatentExitReason::Normal;
+ELatentExitReason UE4Coro::Private::GLatentExitReason = ELatentExitReason::Normal;
 
 namespace
 {

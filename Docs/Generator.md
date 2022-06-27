@@ -7,7 +7,7 @@ the values are generated and returned one at a time.
 
 Given this example generator:
 ```cpp
-using namespace UE5Coro;
+using namespace UE4Coro;
 
 TGenerator<int> CountToThree()
 {

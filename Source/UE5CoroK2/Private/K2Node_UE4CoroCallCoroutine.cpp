@@ -29,26 +29,26 @@
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 // ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#include "K2Node_UE5CoroCallCoroutine.h"
+#include "K2Node_UE4CoroCallCoroutine.h"
 #include "BlueprintActionDatabaseRegistrar.h"
 #include "BlueprintNodeSpawner.h"
 #include "EdGraphSchema_K2.h"
-#include "UE5Coro/AsyncCoroutine.h"
+#include "UE4Coro/AsyncCoroutine.h"
 #include "UObject/Class.h"
 #include "UObject/Field.h"
 #include "UObject/UnrealType.h"
 #include "UObject/UObjectIterator.h"
 
-#define LOCTEXT_NAMESPACE "UE5Coro"
+#define LOCTEXT_NAMESPACE "UE4Coro"
 
-void UK2Node_UE5CoroCallCoroutine::CustomizeNode(
+void UK2Node_UE4CoroCallCoroutine::CustomizeNode(
 	UEdGraphNode* NewNode, bool bIsTemplateNode, UFunction* Function)
 {
 	auto* This = CastChecked<ThisClass>(NewNode);
 	This->SetFromFunction(Function);
 }
 
-void UK2Node_UE5CoroCallCoroutine::GetMenuActions(
+void UK2Node_UE4CoroCallCoroutine::GetMenuActions(
 	FBlueprintActionDatabaseRegistrar& BlueprintActionDatabaseRegistrar) const
 {
 	auto* Struct = FAsyncCoroutine::StaticStruct();
@@ -83,7 +83,7 @@ void UK2Node_UE5CoroCallCoroutine::GetMenuActions(
 		}
 }
 
-void UK2Node_UE5CoroCallCoroutine::PostParameterPinCreated(UEdGraphPin* Pin)
+void UK2Node_UE4CoroCallCoroutine::PostParameterPinCreated(UEdGraphPin* Pin)
 {
 	Super::PostParameterPinCreated(Pin);
 

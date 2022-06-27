@@ -31,11 +31,11 @@
 
 #include "LatentActions.h"
 #include "LatentExitReason.h"
-#include "UE5Coro/AsyncAwaiters.h"
-#include "UE5Coro/AsyncCoroutine.h"
-#include "UE5Coro/LatentAwaiters.h"
+#include "UE4Coro/AsyncAwaiters.h"
+#include "UE4Coro/AsyncCoroutine.h"
+#include "UE4Coro/LatentAwaiters.h"
 
-using namespace UE5Coro::Private;
+using namespace UE4Coro::Private;
 
 namespace
 {
