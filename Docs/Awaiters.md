@@ -6,12 +6,12 @@ header files for that).
 
 ## Async tasks
 
-`UE4Coro::Async` contains awaiters that let you conveniently move execution
+`UE5Coro::Async` contains awaiters that let you conveniently move execution
 between various threads (notably between the game thread and everything else).
 
 ## Latent awaiters
 
-`UE4Coro::Latent` awaiters are implemented as latent actions, even if your
+`UE5Coro::Latent` awaiters are implemented as latent actions, even if your
 coroutine is otherwise not one. This makes their lifetime tied to the world so
 it's possible, e.g., if PIE ends that `co_await`ing them will not resume your
 coroutine. In this case your stack is still unwound normally (similarly to if
@@ -21,7 +21,7 @@ this could cause problems:
 
 ```cpp
 T* Thing = new T();
-co_await UE4Coro::Latent::Something(); // This may not resume
+co_await UE5Coro::Latent::Something(); // This may not resume
 delete Thing;
 ```
 
@@ -40,11 +40,11 @@ as neither of these.
 
 Most existing latent actions in the engine return `void` so there's nothing
 that you could take or store to `co_await` them. There are two wrappers
-provided in `namespace UE4Coro::Latent` to make this work:
+provided in `namespace UE5Coro::Latent` to make this work:
 
 ```cpp
 using namespace std::placeholders; // for ChainEx
-using namespace UE4Coro;
+using namespace UE5Coro;
 ...
 
 // Automatic parameter matching: simply skip WorldContextObject and LatentInfo
@@ -95,11 +95,11 @@ move-constructed object, not the original. This matters in extremely unusual
 scenarios where the caller wants to still access the rvalue object after the
 latent function has returned. If for some reason you need exactly this, refer
 to the implementation of `Latent::ChainEx` to see how to register yourself with
-`UUE4CoroSubsystem` and call the function taking rvalue references directly.
+`UUE5CoroSubsystem` and call the function taking rvalue references directly.
 
 ## HTTP
 
-`UE4Coro::Http::ProcessAsync` wraps a FHttpRequestRef in an awaiter that
+`UE5Coro::Http::ProcessAsync` wraps a FHttpRequestRef in an awaiter that
 resumes your coroutine when the request is done (including errors).
 Unlike OnProcessRequestComplete() this does **not** force you back on the game
 thread (you can start and finish there if you wish of course).

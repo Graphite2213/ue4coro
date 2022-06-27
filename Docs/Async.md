@@ -2,8 +2,8 @@
 
 Returning `FAsyncCoroutine` (unfortunately not namespaced due to UHT limitations)
 from a function makes it coroutine-enabled and lets you `co_await` various
-awaiters provided by this library, found in `namespace UE4Coro::Async` and
-`namespace UE4Coro::Latent`. Any async coroutine can use both async and latent
+awaiters provided by this library, found in `namespace UE5Coro::Async` and
+`namespace UE5Coro::Latent`. Any async coroutine can use both async and latent
 awaiters, but latent awaiters are limited to the game thread.
 
 `FAsyncCoroutine` is a minimal (around `sizeof(void*)` depending on your
@@ -22,7 +22,7 @@ autonomously or implement a latent `UFUNCTION`, tied to the latent action manage
 
 If your function **does not** have a `FLatentActionInfo` parameter, the coroutine
 is running in "async mode".
-You still have access to awaiters in `namespace UE4Coro::Latent` (locked to the
+You still have access to awaiters in `namespace UE5Coro::Latent` (locked to the
 game thread) but as far as your callers are concerned, the function returns at the
 first `co_await` and drives itself after that point.
 
@@ -59,13 +59,13 @@ Although it's not directly forbidden to reuse awaiter objects, it's recommended
 not to as the effects are rarely what you need and could change in future
 versions. Treat them as expired once they've been `co_await`ed.
 
-The awaiter types that are in the `UE4Coro::Private` namespace are subject to
+The awaiter types that are in the `UE5Coro::Private` namespace are subject to
 change in any future version. Most of the time, you don't even need to know
 about them, e.g. `co_await Something();`, but if you want to store them in
 a variable (see below), use `auto`.
 
 There are some additional situations that could cause unexpected behavior:
-* `co_await`ing `namespace UE4Coro::Latent` awaiters off the game thread.
+* `co_await`ing `namespace UE5Coro::Latent` awaiters off the game thread.
 * Moving to a named thread that's not enabled, e.g., RHI.
 * Expecting to resume a latent awaiter while paused or otherwise not ticking.
 
@@ -78,7 +78,7 @@ It is possible to run multiple awaiters overlapped, which makes sense for some o
 them that perform useful actions and not just wait (but not limited to them):
 
 ```cpp
-using namespace UE4Coro;
+using namespace UE5Coro;
 
 FAsyncCoroutine AMyActor::GuaranteedSlowLoad(int, FLatentActionInfo)
 {
@@ -122,7 +122,7 @@ work for `std::vector` it will probably work for coroutines, too.
 Examples of dangerous code:
 
 ```cpp
-using namespace UE4Coro;
+using namespace UE5Coro;
 
 FAsyncCoroutine AMyActor::Latent(UObject* Obj, FLatentActionInfo)
 {
@@ -155,7 +155,7 @@ Especially dangerous if you're running on another thread, `this` protection
 and `co_await` _not_ resuming the coroutine does not apply if you're not latent:
 
 ```cpp
-using namespace UE4Coro;
+using namespace UE5Coro;
 
 FAsyncCoroutine UMyExampleClass::DontDoThisAtHome(UObject* Dangerous)
 {

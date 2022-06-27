@@ -1,4 +1,4 @@
-# UE4Coro
+# UE5Coro
 
 ## **IMPORTANT NOTICE(S)**
 
@@ -18,7 +18,7 @@ In your Build.cs file, add or change this line:
 ```c#
 CppStandard = CppStandardVersion.Latest;
 ```
-Add `"UE4Coro"` to your dependency module names, enable the plugin, and you're
+Add `"UE5Coro"` to your dependency module names, enable the plugin, and you're
 ready to go!
 
 ## Features
@@ -41,11 +41,11 @@ Generators can be used to return an arbitrary number of items from a function
 without having to pass them through temp arrays, etc.
 In C# they're known as iterators.
 
-Returning `UE4Coro::TGenerator<T>` makes a function coroutine enabled, supporting
+Returning `UE5Coro::TGenerator<T>` makes a function coroutine enabled, supporting
 `co_yield`:
 
 ```cpp
-using namespace UE4Coro;
+using namespace UE5Coro;
 
 TGenerator<FString> MakeParkingSpaces(int Num)
 {
@@ -65,7 +65,7 @@ coroutine enabled and support `co_await`. There's special handling in place that
 automatically implements BP latent actions for you but it works for everything:
 
 ```cpp
-using namespace UE4Coro;
+using namespace UE5Coro;
 
 UFUNCTION(BlueprintCallable, Meta = (Latent, LatentInfo = "LatentInfo"))
 FAsyncCoroutine UExampleFunctionLibrary::K2_Foo(int EpicPleaseFixUE22342,
