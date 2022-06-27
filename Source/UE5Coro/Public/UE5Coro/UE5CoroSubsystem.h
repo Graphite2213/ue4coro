@@ -40,7 +40,7 @@
  * Subsystem supporting some async coroutine functionality.<br>
  * You never need to interact with it directly.
  */
-UCLASS(Hidden)
+UCLASS()
 class UE5CORO_API UUE5CoroSubsystem : public UWorldSubsystem
 {
 	GENERATED_BODY()
