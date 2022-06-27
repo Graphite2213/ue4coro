@@ -36,7 +36,7 @@ public class UE5Coro : ModuleRules
 	public UE5Coro(ReadOnlyTargetRules Target)
 		: base(Target)
 	{
-		CppStandard = CppStandardVersion.Cpp20;
+		CppStandard = CppStandardVersion.Latest;
 		bUseUnity = false;
 
 		PublicDependencyModuleNames.AddRange(new[]
