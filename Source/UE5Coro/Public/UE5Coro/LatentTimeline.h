@@ -32,6 +32,7 @@
 #pragma once
 
 #include "UE5Coro/AsyncCoroutine.h"
+#include <functional>
 
 namespace UE5Coro::Latent
 {
