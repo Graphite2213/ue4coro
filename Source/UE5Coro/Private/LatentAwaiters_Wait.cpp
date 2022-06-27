@@ -59,9 +59,7 @@ bool WaitUntilTime(void*& State, bool bCleanup)
 	if (bCleanup) [[unlikely]]
 		return false;
 
-	static_assert(sizeof(void*) >= sizeof(double),
-	              "32-bit platforms are not supported");
-	auto& TargetTime = reinterpret_cast<double&>(State);
+	float& TargetTime = reinterpret_cast<float&>(State);
 	return (GWorld->*GetTime)() >= TargetTime;
 }
 
@@ -78,10 +76,10 @@ bool WaitUntilPredicate(void*& State, bool bCleanup)
 }
 
 template<auto GetTime>
-FLatentAwaiter GenericSeconds(double Seconds)
+FLatentAwaiter GenericSeconds(float Seconds)
 {
 	void* State = nullptr;
-	reinterpret_cast<double&>(State) = (GWorld->*GetTime)() + Seconds;
+	reinterpret_cast<float&>(State) = (GWorld->*GetTime)() + Seconds;
 	return FLatentAwaiter(State, &WaitUntilTime<GetTime>);
 }
 }
@@ -98,22 +96,22 @@ FLatentAwaiter Latent::Frames(int32 Frames)
 	return FLatentAwaiter(reinterpret_cast<void*>(TicksPtr), &WaitUntilFrame);
 }
 
-FLatentAwaiter Latent::Seconds(double Seconds)
+FLatentAwaiter Latent::Seconds(float Seconds)
 {
 	return GenericSeconds<&UWorld::GetTimeSeconds>(Seconds);
 }
 
-FLatentAwaiter Latent::UnpausedSeconds(double Seconds)
+FLatentAwaiter Latent::UnpausedSeconds(float Seconds)
 {
 	return GenericSeconds<&UWorld::GetUnpausedTimeSeconds>(Seconds);
 }
 
-FLatentAwaiter Latent::RealSeconds(double Seconds)
+FLatentAwaiter Latent::RealSeconds(float Seconds)
 {
 	return GenericSeconds<&UWorld::GetRealTimeSeconds>(Seconds);
 }
 
-FLatentAwaiter Latent::AudioSeconds(double Seconds)
+FLatentAwaiter Latent::AudioSeconds(float Seconds)
 {
 	return GenericSeconds<&UWorld::GetAudioTimeSeconds>(Seconds);
 }

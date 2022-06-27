@@ -44,7 +44,6 @@ public class UE5Coro : ModuleRules
 			"Core",
 			"CoreUObject",
 			"Engine",
-			"HTTP",
 		});
 	}
 }

@@ -59,19 +59,19 @@ UE5CORO_API Private::FLatentAwaiter Frames(int32);
 
 /** Resumes the coroutine the specified amount of seconds later.<br>
  *  This is affected by both pause and time dilation. */
-UE5CORO_API Private::FLatentAwaiter Seconds(double);
+UE5CORO_API Private::FLatentAwaiter Seconds(float);
 
 /** Resumes the coroutine the specified amount of seconds later.<br>
  *  This is affected by time dilation only, NOT pause. */
-UE5CORO_API Private::FLatentAwaiter UnpausedSeconds(double);
+UE5CORO_API Private::FLatentAwaiter UnpausedSeconds(float);
 
 /** Resumes the coroutine the specified amount of seconds later.<br>
  *  This is not affected by pause or time dilation. */
-UE5CORO_API Private::FLatentAwaiter RealSeconds(double);
+UE5CORO_API Private::FLatentAwaiter RealSeconds(float);
 
 /** Resumes the coroutine the specified amount of seconds later.<br>
  *  This is affected by pause only, NOT time dilation. */
-UE5CORO_API Private::FLatentAwaiter AudioSeconds(double);
+UE5CORO_API Private::FLatentAwaiter AudioSeconds(float);
 
 /** Asynchronously starts loading the object, resumes once it's loaded. */
 UE5CORO_API Private::FLatentAwaiter AsyncLoadObject(TSoftObjectPtr<UObject>);
