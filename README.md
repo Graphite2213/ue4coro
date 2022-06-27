@@ -4,7 +4,7 @@ This repo is a fork of [UE5Coro](https://github.com/landelare/ue5coro), changed 
 
 I only tested this on a source build of the engine so i cannot guarantee that it will work on a launcher build.
 
-There is an arguably important feature missing out of this version of UE5Coro (Http coroutines) that i did not manage to port to UE4. Maybe one day.
+There is an arguably important feature missing in this version of UE5Coro (HTTP coroutines) that i did not manage to port to UE4. Maybe one day.
 
 ## Installing
 
