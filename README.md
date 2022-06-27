@@ -17,6 +17,9 @@ In your Build.cs file, add or change this line:
 ```c#
 CppStandard = CppStandardVersion.Latest;
 ```
+
+Make sure to change the name of the cloned folder to 'ue5coro'.
+
 Add `"UE5Coro"` to your dependency module names, enable the plugin, and you're
 ready to go!
 
