@@ -1,9 +1,10 @@
 # UE5Coro
 
-This library implements C++20
-[coroutine](https://en.cppreference.com/w/cpp/language/coroutines) support for
-Unreal Engine 5. It complements the engine's (as of 5.0) experimental coroutine
-support with additional features such as easy authoring of BP latent actions.
+This repo is a fork of [UE5Coro](https://github.com/landelare/ue5coro), changed to work with UE4 out of the box.
+
+I only tested this on a source build of the engine so i cannot guarantee that it will work on a launcher build.
+
+There is an arguably important feature missing out of this version of UE5Coro (Http coroutines) that i did not manage to port to UE4. Maybe one day.
 
 ## Installing
 
@@ -15,7 +16,7 @@ If you want to install to the engine, you'll need to clone this repository under
 You'll obviously need C\+\+20 support enabled in your project.
 In your Build.cs file, add or change this line:
 ```c#
-CppStandard = CppStandardVersion.Cpp20;
+CppStandard = CppStandardVersion.Latest;
 ```
 Add `"UE5Coro"` to your dependency module names, enable the plugin, and you're
 ready to go!
